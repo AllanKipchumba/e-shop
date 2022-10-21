@@ -8,4 +8,4 @@ export { Login } from "./auth/Login";
 
 export { Register } from "./auth/Register";
 
-export { Reset } from "./auth/Rsetr";
+export { Reset } from "./auth/Reset";
