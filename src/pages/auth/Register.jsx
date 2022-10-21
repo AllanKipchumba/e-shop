@@ -3,7 +3,6 @@ import styles from "./Auth.module.scss";
 import registerImg from "../../assets/register.png";
 import { Card } from "../../components/card/Card";
 import { Link } from "react-router-dom";
-import { FaGoogle } from "react-icons/fa";
 
 export const Register = () => {
   return (
