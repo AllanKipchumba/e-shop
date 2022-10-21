@@ -5,6 +5,7 @@ import { ReactDOM } from "react-dom";
 
 export const Loader = () => {
   //react portal > renders this component outside the parent DOM node
+  //it makes the component to cover all other components
   return ReactDOM.createPortal(
     <div className={styles.wrapper}>
       <div className={styles.loader}>
