@@ -7,7 +7,10 @@ import { auth } from "./../../firebase/config";
 import { toast } from "react-toastify";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
+import {
+  SET_ACTIVE_USER,
+  REMOVE_ACTIVE_USER,
+} from "../../redux/slice/authSlice";
 
 //re-use jsx
 const logo = (
@@ -44,8 +47,9 @@ export const Header = () => {
       if (user) {
         //create userName from email when user logs in with email and pass
         if (user.displayName == null) {
-          //remove @gmail.com from email
-          const u1 = user.email.slice(0, -10);
+          //extract a substring before @ from the email string
+          const email = user.email;
+          const u1 = email.substring(0, email.indexOf("@"));
 
           //convert first char to uppercase and concat with other chars
           const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
@@ -63,6 +67,7 @@ export const Header = () => {
         );
       } else {
         setDisplayName("");
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
   }, []);
