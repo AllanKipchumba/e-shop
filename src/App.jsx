@@ -12,7 +12,7 @@ export const App = () => {
   return (
     <>
       <BrowserRouter>
-        <ToastContainer autoClose={2000} hideProgressBar={true} />
+        <ToastContainer autoClose={2000} />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
