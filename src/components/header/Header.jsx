@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import styles from "./Header.module.scss";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { auth } from "./../../firebase/config";
+import { toast } from "react-toastify";
+import { signOut } from "firebase/auth";
 
 //re-use jsx
 const logo = (
@@ -28,9 +31,21 @@ const activeLink = ({ isActive }) => isActive && `${styles.active}`;
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => setShowMenu(!showMenu);
   const hideMenu = () => setShowMenu(false);
+
+  const logoutUser = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Sign-out successful.");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
   return (
     <header>
@@ -82,6 +97,9 @@ export const Header = () => {
               </NavLink>
               <NavLink to="/order-history" className={activeLink}>
                 My Orders
+              </NavLink>
+              <NavLink to="/" onClick={logoutUser}>
+                Logout
               </NavLink>
             </span>
             {cart}

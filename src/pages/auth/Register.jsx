@@ -5,9 +5,8 @@ import { Card } from "../../components/card/Card";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "./../../components/loader/Loader";
+import { toast } from "react-toastify";
 
 export const Register = () => {
   //input fields
@@ -40,7 +39,6 @@ export const Register = () => {
 
   return (
     <>
-      <ToastContainer autoClose={5000} hideProgressBar={true} />
       {isLoading && <Loader />}
 
       <section className={`container ${styles.auth}`}>

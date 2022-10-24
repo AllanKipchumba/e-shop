@@ -6,7 +6,7 @@ import { FaGoogle } from "react-icons/fa";
 import { Card } from "../../components/card/Card";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Loader } from "../../components/loader/Loader";
 
 export const Login = () => {
@@ -37,7 +37,6 @@ export const Login = () => {
 
   return (
     <>
-      <ToastContainer autoClose={5000} hideProgressBar={true} />
       {isLoading && <Loader />}
 
       <section className={`container ${styles.auth}`}>
