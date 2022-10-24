@@ -42,13 +42,22 @@ export const Header = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // console.log(user);
-        setDisplayName(user.displayName);
+        //create userName from email when user logs in with email and pass
+        if (user.displayName == null) {
+          //remove @gmail.com from email
+          const u1 = user.email.slice(0, -10);
+
+          //convert first char to uppercase and concat with other chars
+          const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
+
+          setDisplayName(uName);
+        }
+        //..
 
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
-            userName: user.displayName,
+            userName: user.displayName ? user.displayName : displayName,
             userID: user.uid,
           })
         );
