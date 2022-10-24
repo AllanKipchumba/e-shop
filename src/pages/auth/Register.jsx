@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Auth.module.scss";
 import registerImg from "../../assets/register.png";
 import { Card } from "../../components/card/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,6 +16,8 @@ export const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const registerUser = (e) => {
     e.preventDefault();
 
@@ -26,9 +28,8 @@ export const Register = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
         setIsLoading(false);
-        // ...
+        navigate("/");
       })
       .catch((error) => {
         setIsLoading(false);
