@@ -12,7 +12,7 @@ import {
   REMOVE_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/HiddenLink";
-import { AdminOnlyRoute } from "../adminOnlyRoute/AdminOnlyRoute";
+import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
 
 //re-use jsx
 const logo = (
@@ -120,9 +120,11 @@ export const Header = () => {
             </li>
 
             <li>
-              <AdminOnlyRoute>
-                <button className="--btn --btn-primary">Admin</button>
-              </AdminOnlyRoute>
+              <AdminOnlyLink>
+                <Link to="/admin/home">
+                  <button className="--btn --btn-primary">Admin</button>
+                </Link>
+              </AdminOnlyLink>
             </li>
 
             <li>
