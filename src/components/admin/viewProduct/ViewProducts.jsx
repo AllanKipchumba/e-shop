@@ -1,5 +1,5 @@
 import React from "react";
 
-export const ViewProduct = () => {
+export const ViewProducts = () => {
   return <div>ViewProduct</div>;
 };

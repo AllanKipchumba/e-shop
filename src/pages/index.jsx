@@ -9,3 +9,5 @@ export { Login } from "./auth/Login";
 export { Register } from "./auth/Register";
 
 export { Reset } from "./auth/Reset";
+
+export { Admin } from "./admin/Admin";
