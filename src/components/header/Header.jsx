@@ -12,6 +12,7 @@ import {
   REMOVE_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/HiddenLink";
+import { AdminOnlRoute } from "../adminOnlyRoute/AdminOnlyRoute";
 
 //re-use jsx
 const logo = (
@@ -116,6 +117,12 @@ export const Header = () => {
             <li className={styles["logo-mobile"]}>
               {logo}
               <FaTimes size={22} color="#fff" onClick={hideMenu} />
+            </li>
+
+            <li>
+              <AdminOnlRoute>
+                <button className="--btn --btn-primary">Admin</button>
+              </AdminOnlRoute>
             </li>
 
             <li>

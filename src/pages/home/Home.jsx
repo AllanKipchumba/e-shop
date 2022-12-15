@@ -4,7 +4,8 @@ import { Slider } from "../../components/slider/Slider";
 export const Home = () => {
   return (
     <div>
-      <Slider />
+      {/* <Slider /> */}
+      <h1>Home</h1>
     </div>
   );
 };
