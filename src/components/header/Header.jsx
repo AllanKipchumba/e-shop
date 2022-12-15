@@ -46,6 +46,7 @@ export const Header = () => {
   //monitor currently signed in user
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      console.log(user);
       if (user) {
         //create userName from email when user logs in with email and pass
         if (user.displayName == null) {
@@ -65,7 +66,7 @@ export const Header = () => {
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
-            userName: user.displayName ? user.displayName : displayName,
+            userName: displayName,
             userID: user.uid,
           })
         );
@@ -74,7 +75,7 @@ export const Header = () => {
         dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  }, []);
+  }, [dispatch, displayName]);
 
   const toggleMenu = () => setShowMenu(!showMenu);
   const hideMenu = () => setShowMenu(false);
