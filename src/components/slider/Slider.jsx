@@ -30,6 +30,8 @@ export const Slider = () => {
 
   useEffect(() => {
     autoscroll && auto();
+
+    // Before the effect is applied again, clear any previously-set intervals that were started by the setInterval() function
     return () => clearInterval(slideInterval);
   }, [currentSlide]);
 
