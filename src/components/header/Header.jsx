@@ -78,6 +78,7 @@ export const Header = () => {
   const toggleMenu = () => setShowMenu(!showMenu);
   const hideMenu = () => setShowMenu(false);
 
+  //log the user out
   const logoutUser = () => {
     signOut(auth)
       .then(() => {
