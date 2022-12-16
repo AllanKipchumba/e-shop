@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styles from "./addProduct.module.scss";
 import { Card } from "../../card/Card";
+import { ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../../firebase/config";
 
 //categories to be provided as options in select input field
 const categories = [
@@ -11,10 +13,11 @@ const categories = [
 ];
 
 export const AddProduct = () => {
+  const { log } = console;
   const [product, setProduct] = useState({
     name: "",
     imageURL: "",
-    price: null,
+    price: 0,
     category: "",
     description: "",
   });
@@ -25,7 +28,16 @@ export const AddProduct = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImageChange = () => {};
+  //UPLOAD IMAGE TO FIREBASE STORAGE
+  const handleImageChange = (e) => {
+    //access the file being uploaded
+    const file = e.target.files[0];
+    // log(file);
+    //store the file in the images folder in firebase storage
+    const storageRef = ref(storage, `e-shop/${Date.now()}${file.name}`);
+    //upload task to firebase
+    const uploadTask = uploadBytesResumable(storageRef, file);
+  };
 
   const addProduct = (e) => {
     e.preventDefault();
