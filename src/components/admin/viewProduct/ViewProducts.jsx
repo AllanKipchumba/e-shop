@@ -5,6 +5,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { Loader } from "../../index";
 
 const { log } = console;
 
@@ -42,6 +43,7 @@ export const ViewProducts = () => {
 
   return (
     <>
+      {isLoading && <Loader />}
       <div className={styles.table}>
         <h2>All Products</h2>
 
@@ -75,7 +77,7 @@ export const ViewProducts = () => {
                     <td>{name}</td>
                     <td>{category}</td>
                     <td>{`$${price}`}</td>
-                    <td>
+                    <td className="icon">
                       <Link to="/admin/add-product">
                         <FaEdit size={20} color="green" />
                       </Link>
