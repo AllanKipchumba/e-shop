@@ -59,10 +59,10 @@ export const ViewProducts = () => {
                 <th>Actions</th>
               </tr>
             </thead>
-            {products.map((product, index) => {
-              const { id, name, price, imageURL, category } = product;
-              return (
-                <tbody>
+            <tbody>
+              {products.map((product, index) => {
+                const { id, name, price, imageURL, category } = product;
+                return (
                   <tr key={id}>
                     <td>{index + 1}</td>
                     <td>
@@ -83,9 +83,9 @@ export const ViewProducts = () => {
                       <FaTrashAlt size={18} color="red" />
                     </td>
                   </tr>
-                </tbody>
-              );
-            })}
+                );
+              })}
+            </tbody>
           </table>
         )}
       </div>
