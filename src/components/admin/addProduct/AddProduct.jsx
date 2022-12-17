@@ -42,19 +42,19 @@ export const AddProduct = () => {
   const handleImageChange = (e) => {
     //access the file being uploaded
     const file = e.target.files[0];
-    // log(file);
     //store the file in the images folder in firebase storage
     const storageRef = ref(storage, `e-shop/${Date.now()}${file.name}`);
     //upload task to firebase
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    //MONITOR UPLOAD PROGRESS
+    //monitor upload progress
     uploadTask.on(
       "state_changed",
       (snapshot) => {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress = Math.trunc(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
         setUploadProgress(progress);
       },
       (error) => {
@@ -62,6 +62,7 @@ export const AddProduct = () => {
       },
       () => {
         // Handle successful uploads on complete
+        // get the image url
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setProduct({ ...product, imageURL: downloadURL });
           toast.success("Image uploaded succesfully");
@@ -70,6 +71,7 @@ export const AddProduct = () => {
     );
   };
 
+  //UPLOAD PRODUCTS TO FIRESTORE
   const addProduct = (e) => {
     e.preventDefault();
     // log(product);
@@ -146,7 +148,7 @@ export const AddProduct = () => {
               {product.imageURL !== "" && (
                 <input
                   type="text"
-                  // required
+                  required
                   placeholder="image URL"
                   name="imageURL"
                   value={product.imageURL}
