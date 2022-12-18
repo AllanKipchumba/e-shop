@@ -7,7 +7,7 @@ export const useFetchCollection = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  //FETCH DATA FROM FIRESTORE
+  //FETCH DATA FROM FIRESTORE COLLECTION
   const getCollection = (collectionName) => {
     setIsLoading(true);
     try {
@@ -28,7 +28,7 @@ export const useFetchCollection = () => {
       toast.error(error.message);
     }
   };
-
+  //call getCollection when component mounts
   useEffect(() => {
     getCollection();
   }, []);
