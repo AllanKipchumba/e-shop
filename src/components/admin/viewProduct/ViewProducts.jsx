@@ -32,7 +32,6 @@ export const ViewProducts = () => {
     try {
       const productsRef = collection(db, "products");
       const q = query(productsRef, orderBy("createdAt", "desc"));
-
       //listen for real time updates
       onSnapshot(q, (snapshot) => {
         //extracting the data

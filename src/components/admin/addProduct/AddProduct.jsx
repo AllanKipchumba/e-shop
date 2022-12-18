@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import styles from "./addProduct.module.scss";
 import { Card, Loader } from "../../index";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { db, storage } from "../../../firebase/config";
 import { toast } from "react-toastify";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -92,16 +97,18 @@ export const AddProduct = () => {
     );
   };
 
-  //UPLOAD PRODUCTS TO FIRESTORE
+  //------------UPLOAD PRODUCTS TO FIRESTORE---------------
+  const { name, imageURL, category, brand, description } = product;
+  // convert price to NUM type
+  const price = +product.price;
+
   const addProduct = (e) => {
     e.preventDefault();
-    // log(product);
+    console.log(product);
     setIsLoading(true);
     try {
-      const { name, imageURL, category, brand, description } = product;
-      // convert price to NUM type
-      const price = +product.price;
-      const docRef = addDoc(collection(db, "products"), {
+      //create new product
+      addDoc(collection(db, "products"), {
         name,
         imageURL,
         price,
@@ -110,31 +117,47 @@ export const AddProduct = () => {
         description,
         createdAt: Timestamp.now().toDate(),
       });
-
       setIsLoading(false);
       setUploadProgress(0);
       setProduct({ ...initialState });
-
       toast.success("Product uploaded succesfully");
-
       navigate("/admin/all-products");
     } catch (error) {
       setIsLoading(false);
       toast.error(error.message);
     }
   };
-
-  //EDIT PRODUCT
+  //---------EDIT PRODUCT---------
   const editProduct = (e) => {
     e.preventDefault();
-    // setIsLoading(true);
+    setIsLoading(true);
 
-    // try {
-    //   setIsLoading(false);
-    // } catch (error) {
-    //   setIsLoading(false);
-    //   toast.error(error.message);
-    // }
+    //delete previous image before providing a new image
+    if (imageURL !== productEdit.imageURL) {
+      const storageRef = ref(storage, productEdit.imageURL);
+      deleteObject(storageRef);
+    }
+
+    try {
+      //update product
+      setDoc(doc(db, "products", id), {
+        name,
+        imageURL,
+        price,
+        category,
+        brand,
+        description,
+        createdAt: productEdit.createdAt,
+        editedAt: Timestamp.now().toDate(),
+      });
+      setIsLoading(false);
+      toast.success("Product Edited succesfully");
+      navigate("/admin/all-products");
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+      toast.error(error.message);
+    }
   };
 
   return (
