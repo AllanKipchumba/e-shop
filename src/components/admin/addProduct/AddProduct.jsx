@@ -33,6 +33,14 @@ export const AddProduct = () => {
   //find product whose id = params id
   const productEdit = products.find((item) => item.id === id);
 
+  //MAKE INPUT FORM DYNAMIC BASED PARAMS
+  const detectForm = (id, f1, f2) => {
+    if (id === "ADD") {
+      return f1;
+    }
+    return f2;
+  };
+
   //dynamic state
   //--------if id=ADD, state is initialstate, else state is product edit---------------
   const [product, setProduct] = useState(() => {
@@ -44,14 +52,6 @@ export const AddProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  //make the form dynamic
-  const detectForm = (id, f1, f2) => {
-    if (id === "ADD") {
-      return f1;
-    }
-    return f2;
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
