@@ -5,7 +5,8 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../../firebase/config";
 import { toast } from "react-toastify";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 //categories to be provided as options in select input field
 const categories = [
@@ -25,12 +26,32 @@ const initialState = {
 };
 
 export const AddProduct = () => {
-  const [product, setProduct] = useState({ ...initialState });
+  //access params id
+  const { id } = useParams();
+  //access product from redux store
+  const { products } = useSelector((store) => store["product"]);
+  //find product whose id = params id
+  const productEdit = products.find((item) => item.id === id);
+
+  //dynamic state
+  //--------if id=ADD, state is initialstate, else state is product edit---------------
+  const [product, setProduct] = useState(() => {
+    const newState = detectForm(id, { ...initialState }, productEdit);
+    return newState;
+  });
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  //make the form dynamic
+  const detectForm = (id, f1, f2) => {
+    if (id === "ADD") {
+      return f1;
+    }
+    return f2;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -103,13 +124,26 @@ export const AddProduct = () => {
     }
   };
 
+  //EDIT PRODUCT
+  const editProduct = (e) => {
+    e.preventDefault();
+    // setIsLoading(true);
+
+    // try {
+    //   setIsLoading(false);
+    // } catch (error) {
+    //   setIsLoading(false);
+    //   toast.error(error.message);
+    // }
+  };
+
   return (
     <>
       {isLoading && <Loader />}
       <div className={styles.product}>
-        <h1>Add New Product</h1>
+        <h1>{detectForm(id, "Add New Product", "EditProduct")}</h1>
         <Card className={styles.card}>
-          <form onSubmit={addProduct}>
+          <form onSubmit={detectForm(id, addProduct, editProduct)}>
             {/* Product name */}
             <label>Product name:</label>
             <input
@@ -210,7 +244,9 @@ export const AddProduct = () => {
               rows="10"
             ></textarea>
 
-            <button className="--btn --btn-primary">Save Product</button>
+            <button className="--btn --btn-primary">
+              {detectForm(id, "Save Product", "Edit product")}
+            </button>
           </form>
         </Card>
       </div>
