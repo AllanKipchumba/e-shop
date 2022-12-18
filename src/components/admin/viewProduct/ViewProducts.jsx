@@ -15,12 +15,16 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { Loader } from "../../index";
 import { deleteObject, ref } from "firebase/storage";
 import Notiflix from "notiflix";
+import { useDispatch } from "react-redux";
+import { STORE_PRODUCTS } from "../../../redux/slice/productSlice";
 
 const { log } = console;
 
 export const ViewProducts = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   //FETCH PRODUCTS FROM FIRESTORE
   const getProducts = () => {
@@ -39,6 +43,13 @@ export const ViewProducts = () => {
         // log(allProducts);
         setProducts(allProducts);
         setIsLoading(false);
+
+        //dispatch products to redux
+        dispatch(
+          STORE_PRODUCTS({
+            products: allProducts,
+          })
+        );
       });
     } catch (error) {
       setIsLoading(false);
@@ -63,7 +74,6 @@ export const ViewProducts = () => {
       toast.error(error.message);
     }
   };
-
   //confirm delete with notiflix
   const confirmDelete = (id, imageURL) => {
     Notiflix.Confirm.show(
