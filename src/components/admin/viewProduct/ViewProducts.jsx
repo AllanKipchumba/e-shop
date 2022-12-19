@@ -15,50 +15,25 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { Loader } from "../../index";
 import { deleteObject, ref } from "firebase/storage";
 import Notiflix from "notiflix";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { STORE_PRODUCTS } from "../../../redux/slice/productSlice";
+import { useFetchCollection } from "../../../customHooks/useFetchCollection";
 
 const { log } = console;
 
 export const ViewProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, isLoading } = useFetchCollection("products");
+  const { products } = useSelector((store) => store["product"]);
 
   const dispatch = useDispatch();
-
-  //FETCH PRODUCTS FROM FIRESTORE
-  const getProducts = () => {
-    setIsLoading(true);
-    try {
-      const productsRef = collection(db, "products");
-      const q = query(productsRef, orderBy("createdAt", "desc"));
-      //listen for real time updates
-      onSnapshot(q, (snapshot) => {
-        //extracting the data
-        const allProducts = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        // log(allProducts);
-        setProducts(allProducts);
-        setIsLoading(false);
-
-        //dispatch products to redux
-        dispatch(
-          STORE_PRODUCTS({
-            products: allProducts,
-          })
-        );
-      });
-    } catch (error) {
-      setIsLoading(false);
-      toast.error(error.message);
-    }
-  };
-  //fetch products when component mounts
+  //dispatch products to redux
   useEffect(() => {
-    getProducts();
-  }, []);
+    dispatch(
+      STORE_PRODUCTS({
+        products: data,
+      })
+    );
+  }, [dispatch, data]);
 
   //DELETE PRODUCT
   const deleteProduct = async (id, imageURL) => {

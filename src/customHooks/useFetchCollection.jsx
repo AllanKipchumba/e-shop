@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { db } from "../firebase/config";
 
-export const useFetchCollection = () => {
+export const useFetchCollection = (collectionName) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   //FETCH DATA FROM FIRESTORE COLLECTION
-  const getCollection = (collectionName) => {
+  const getCollection = () => {
     setIsLoading(true);
     try {
       const docRef = collection(db, collectionName);
@@ -21,10 +21,12 @@ export const useFetchCollection = () => {
           ...doc.data(),
         }));
         setData(allData);
+        // console.log(allData);
         setIsLoading(false);
       });
     } catch (error) {
       setIsLoading(false);
+      console.log(error);
       toast.error(error.message);
     }
   };
