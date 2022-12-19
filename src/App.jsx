@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 //pages
 import { Home, Contact, Login, Register, Reset, Admin } from "./pages";
 //components
-import { Header, Footer, AdminOnlyRoute } from "./components";
+import { Header, Footer, AdminOnlyRoute, ProductDetails } from "./components";
 
 export const App = () => {
   return (
@@ -28,6 +28,7 @@ export const App = () => {
               </AdminOnlyRoute>
             }
           />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
         </Routes>
         <Footer />
       </BrowserRouter>
