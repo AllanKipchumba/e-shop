@@ -9,6 +9,7 @@ import { ProductList } from "./productList/ProductList";
 const { log } = console;
 
 export const Product = () => {
+  //use the custom hook to fetch data from products collection in firestore
   const { data, isLoading } = useFetchCollection("products");
   const { products } = useSelector((store) => store["product"]);
   // log(products);
