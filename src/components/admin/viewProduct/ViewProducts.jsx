@@ -22,7 +22,9 @@ import { useFetchCollection } from "../../../customHooks/useFetchCollection";
 const { log } = console;
 
 export const ViewProducts = () => {
+  //access firestore data fetched by the useFEtchCollection customhook
   const { data, isLoading } = useFetchCollection("products");
+  //access products from redux store
   const { products } = useSelector((store) => store["product"]);
 
   const dispatch = useDispatch();
