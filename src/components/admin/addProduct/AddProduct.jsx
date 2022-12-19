@@ -165,7 +165,7 @@ export const AddProduct = () => {
       {isLoading && <Loader />}
       <div className={styles.product}>
         <h1>{detectForm(id, "Add New Product", "EditProduct")}</h1>
-        <Card className={styles.card}>
+        <Card cardClass={styles.card}>
           <form onSubmit={detectForm(id, addProduct, editProduct)}>
             {/* Product name */}
             <label>Product name:</label>
