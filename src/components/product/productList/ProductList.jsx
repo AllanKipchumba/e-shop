@@ -3,10 +3,12 @@ import styles from "./productList.module.scss";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaListAlt } from "react-icons/fa";
 import { Search } from "../../search/Search";
+import { ProductItem } from "../productItem/ProductItem";
 
-export const ProductList = () => {
+export const ProductList = ({ products }) => {
   const [grid, setGrid] = useState(true);
   const [search, setSearch] = useState("");
+
   return (
     <div className={styles["product-list"]} id="product">
       <div className={styles.top}>
@@ -42,6 +44,23 @@ export const ProductList = () => {
             <option value="z-a">Z - A</option>
           </select>
         </div>
+      </div>
+
+      <div className={grid ? `${styles.grid}` : `${styles.list}`}>
+        {products.length === 0 ? (
+          <p>No product found.</p>
+        ) : (
+          <>
+            {products.map((product) => {
+              return (
+                <div key={product.id}>
+                  {/* ...product passes all the properties of product to the child component */}
+                  <ProductItem {...product} grid={grid} product={product} />
+                </div>
+              );
+            })}
+          </>
+        )}
       </div>
     </div>
   );
