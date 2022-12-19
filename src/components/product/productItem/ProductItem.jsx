@@ -12,7 +12,7 @@ export const ProductItem = ({
   imageURL,
   description,
 }) => {
-  //shorted characters
+  //shorten characters dynamically - product name and description
   const shortenText = (text, n) => {
     if (text.length > n) {
       const shortenedText = text.substring(0, n).concat("...");
