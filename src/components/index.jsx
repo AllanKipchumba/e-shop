@@ -4,6 +4,7 @@ export { Footer } from "./footer/Footer";
 export { AdminOnlyRoute } from "./adminOnlyRoute/AdminOnlyRoute";
 export { Card } from "./card/Card";
 export { Loader } from "./loader/Loader";
+export { Search } from "./search/Search";
 //admin routes
 export { Orders } from "./admin/orders/Orders";
 export { AddProduct } from "./admin/addProduct/AddProduct";
