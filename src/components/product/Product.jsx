@@ -8,8 +8,6 @@ import { ProductFilter } from "./productFilter/ProductFilter";
 import { ProductList } from "./productList/ProductList";
 import spinnerImg from "../../assets/spinner.jpg";
 
-const { log } = console;
-
 export const Product = () => {
   //use the custom hook to fetch data from products collection in firestore
   const { data, isLoading } = useFetchCollection("products");
