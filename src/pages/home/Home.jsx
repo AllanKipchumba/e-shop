@@ -14,13 +14,13 @@ export const Home = () => {
       return;
     }
   };
-  useEffect(() => {
-    scrollToProducts();
-  }, []);
+  // useEffect(() => {
+  //   scrollToProducts();
+  // }, []);
 
   return (
     <div>
-      <Slider />
+      {/* <Slider /> */}
       <Product />
     </div>
   );
