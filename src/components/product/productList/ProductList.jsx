@@ -6,18 +6,26 @@ import { Search } from "../../search/Search";
 import { ProductItem } from "../productItem/ProductItem";
 import { useDispatch, useSelector } from "react-redux";
 import { FILTER_BY_SEARCH } from "../../../redux/slice/filterSlice";
+import { SORT_PRODUCTS } from "../../../redux/slice/filterSlice";
 
 export const ProductList = ({ products }) => {
   const [grid, setGrid] = useState(true);
   const [search, setSearch] = useState("");
-  //access filtered product from redux store
-  const { filteredProduct } = useSelector((store) => store["filter"]);
+  const [sort, setSort] = useState("latest");
 
   const dispatch = useDispatch();
   //fire FILTER_BY_SEARCH action
   useEffect(() => {
     dispatch(FILTER_BY_SEARCH({ products, search }));
   }, [dispatch, products, search]);
+
+  //fire SORT_PRODUCTS action
+  useEffect(() => {
+    dispatch(SORT_PRODUCTS({ products, sort }));
+  }, [dispatch, products, sort]);
+
+  //access filtered product from redux store
+  const { filteredProduct } = useSelector((store) => store["filter"]);
 
   return (
     <div className={styles["product-list"]} id="product">
@@ -34,7 +42,7 @@ export const ProductList = ({ products }) => {
             onClick={() => setGrid(false)}
           />
           <p>
-            <b>10 Products found.</b>
+            <b>{filteredProduct.length} Products found.</b>
           </p>
         </div>
 
@@ -46,7 +54,7 @@ export const ProductList = ({ products }) => {
         {/* sort products */}
         <div className={styles.sort}>
           <label>Sort by:</label>
-          <select>
+          <select value={sort} onChange={(e) => setSort(e.target.value)}>
             <option value="latest">latest</option>
             <option value="lowest-price">Lowest Price</option>
             <option value="highest-price">Highest Price</option>
@@ -57,7 +65,7 @@ export const ProductList = ({ products }) => {
       </div>
 
       <div className={grid ? `${styles.grid}` : `${styles.list}`}>
-        {products.length === 0 ? (
+        {filteredProduct.length === 0 ? (
           <p>No product found.</p>
         ) : (
           <>

@@ -11,11 +11,9 @@ import spinnerImg from "../../assets/spinner.jpg";
 export const Product = () => {
   //use the custom hook to fetch data from products collection in firestore
   const { data, isLoading } = useFetchCollection("products");
-  const { products } = useSelector((store) => store["product"]);
-  // log(products);
 
+  //dispatch data(products) to redux store
   const dispatch = useDispatch();
-  //dispatch products to redux
   useEffect(() => {
     dispatch(
       STORE_PRODUCTS({
@@ -23,6 +21,10 @@ export const Product = () => {
       })
     );
   }, [dispatch, data]);
+
+  //access products from redux store
+  const { products } = useSelector((store) => store["product"]);
+
   return (
     <section>
       <div className={`container ${styles.product}`}>
