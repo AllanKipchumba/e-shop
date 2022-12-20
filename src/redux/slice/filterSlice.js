@@ -32,7 +32,7 @@ const filterSlice = createSlice({
                     break;
                 case "highest-price":
                     tempProducts = products.slice().sort((a, b) => {
-                        //sort through the products, get the lowest price, display it increasingly
+                        //sort through the products, get the highest price, display it decreasingly
                         return b.price - a.price;
                     });
                     break;
@@ -44,7 +44,7 @@ const filterSlice = createSlice({
                     break;
                 case "z-a":
                     tempProducts = products.slice().sort((a, b) => {
-                        //sort the products alphabetically from a - z
+                        //sort the products alphabetically from z - a
                         return b.name.localeCompare(a.name);
                     });
                     break;
