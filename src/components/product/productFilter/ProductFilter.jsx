@@ -3,14 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   FILTER_BY_BRAND,
   FILTER_BY_CATEGORY,
+  FILTER_BY_PRICE,
 } from "../../../redux/slice/filterSlice";
 import styles from "./productFilter.module.scss";
 
 export const ProductFilter = () => {
   const [category, setCategory] = useState("All");
   const [brand, setBrand] = useState("All");
+  const [price, setPrice] = useState(3000);
+
   //get products from redux store
   const { products } = useSelector((store) => store["product"]);
+  //get min and max product price from store
+  const { minPrice, maxPrice } = useSelector((store) => store["product"]);
 
   //create an array of categories
   const allCategories = [
@@ -28,16 +33,21 @@ export const ProductFilter = () => {
 
   const dispatch = useDispatch();
 
-  //dispatch action to filter products by category
+  // filter products by category
   const filterProducts = (cat) => {
     setCategory(cat);
     dispatch(FILTER_BY_CATEGORY({ products, category: cat }));
   };
 
-  //dispatch action to filter products by brand
+  //filter products by brand
   useEffect(() => {
     dispatch(FILTER_BY_BRAND({ products, brand }));
   }, [dispatch, products, brand]);
+
+  //filter products by price
+  useEffect(() => {
+    dispatch(FILTER_BY_PRICE({ products, price }));
+  }, [dispatch, products, price]);
 
   return (
     <div className={styles.filter}>
@@ -70,9 +80,15 @@ export const ProductFilter = () => {
         </select>
 
         <h4>Price</h4>
-        <p>1500</p>
+        <p>{`${price}`}</p>
         <div className={styles.price}>
-          <input type="range" name="price" min="100" max="1000" />
+          <input
+            type="range"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            min={minPrice}
+            max={maxPrice}
+          />
         </div>
       </div>
       <br />
