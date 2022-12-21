@@ -10,15 +10,16 @@ export const Pagination = ({
   const pageNumbers = [];
   const totalPages = totalProducts / productsPerPage;
 
-  //limit the page numbers ahown
+  //limit the sets of page numbers shown
   const [pageNumberLimit, setPageNumberLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
   //create the page numbers
-  for (let i = 1; i < Math.ceil(totalProducts / productsPerPage); i++) {
+  for (let i = 1; i < Math.ceil(totalPages) + 1; i++) {
     pageNumbers.push(i);
   }
+  console.log(pageNumbers);
 
   //paginate
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
