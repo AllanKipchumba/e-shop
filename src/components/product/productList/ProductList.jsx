@@ -7,11 +7,26 @@ import { ProductItem } from "../productItem/ProductItem";
 import { useDispatch, useSelector } from "react-redux";
 import { FILTER_BY_SEARCH } from "../../../redux/slice/filterSlice";
 import { SORT_PRODUCTS } from "../../../redux/slice/filterSlice";
+import { Pagination } from "../../pagination/Pagination";
 
 export const ProductList = ({ products }) => {
+  //access filtered product from redux store
+  const { filteredProducts } = useSelector((store) => store["filter"]);
+
   const [grid, setGrid] = useState(true);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("latest");
+
+  //pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(1);
+  //get current Products
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const dispatch = useDispatch();
   //fire FILTER_BY_SEARCH action
@@ -23,9 +38,6 @@ export const ProductList = ({ products }) => {
   useEffect(() => {
     dispatch(SORT_PRODUCTS({ products, sort }));
   }, [dispatch, products, sort]);
-
-  //access filtered product from redux store
-  const { filteredProduct } = useSelector((store) => store["filter"]);
 
   return (
     <div className={styles["product-list"]} id="product">
@@ -42,7 +54,7 @@ export const ProductList = ({ products }) => {
             onClick={() => setGrid(false)}
           />
           <p>
-            <b>{filteredProduct.length} Products found.</b>
+            <b>{filteredProducts.length} Products found.</b>
           </p>
         </div>
 
@@ -65,11 +77,11 @@ export const ProductList = ({ products }) => {
       </div>
 
       <div className={grid ? `${styles.grid}` : `${styles.list}`}>
-        {filteredProduct.length === 0 ? (
+        {filteredProducts.length === 0 ? (
           <p>No product found.</p>
         ) : (
           <>
-            {filteredProduct.map((product) => {
+            {filteredProducts.map((product) => {
               return (
                 <div key={product.id}>
                   {/* ...product passes all the properties of product to the child component */}
@@ -80,6 +92,12 @@ export const ProductList = ({ products }) => {
           </>
         )}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        productsPerPage={productsPerPage}
+        totalProducts={filteredProducts.length}
+      />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    filteredProduct: [],
+    filteredProducts: [],
 };
 
 const filterSlice = createSlice({
@@ -17,7 +17,7 @@ const filterSlice = createSlice({
                 product.category.toLowerCase().includes(search.toLowerCase())
             );
             //update state with the searched product
-            state.filteredProduct = searchedProduct;
+            state.filteredProducts = searchedProduct;
         },
         SORT_PRODUCTS: (state, action) => {
             const { products, sort } = action.payload;
@@ -53,7 +53,7 @@ const filterSlice = createSlice({
                     tempProducts = products;
                     break;
             }
-            state.filteredProduct = tempProducts;
+            state.filteredProducts = tempProducts;
         },
         FILTER_BY_CATEGORY: (state, action) => {
             const { products, category } = action.payload;
@@ -66,7 +66,7 @@ const filterSlice = createSlice({
                     (product) => product.category === category
                 );
             }
-            state.filteredProduct = tempProducts;
+            state.filteredProducts = tempProducts;
         },
         FILTER_BY_BRAND: (state, action) => {
             const { products, brand } = action.payload;
@@ -77,7 +77,7 @@ const filterSlice = createSlice({
                 //return products whose brand matches brand requested from the front-end
                 tempProducts = products.filter((product) => product.brand === brand);
             }
-            state.filteredProduct = tempProducts;
+            state.filteredProducts = tempProducts;
         },
         FILTER_BY_PRICE: (state, action) => {
             const { products, price } = action.payload;
@@ -85,7 +85,7 @@ const filterSlice = createSlice({
             //return products whose price range is less or equal to price set from the front-end
             tempProducts = products.filter((product) => product.price <= price);
 
-            state.filteredProduct = tempProducts;
+            state.filteredProducts = tempProducts;
         },
     },
 });
