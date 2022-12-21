@@ -19,10 +19,13 @@ export const ProductList = ({ products }) => {
 
   //pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(9);
+
   //get current Products
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+
+  //Return a subarray of elements from the filtered products array, starting at the firstProductIndex and ending at (and not including) the lastProductIndex
   const currentProducts = filteredProducts.slice(
     indexOfFirstProduct,
     indexOfLastProduct
@@ -81,7 +84,7 @@ export const ProductList = ({ products }) => {
           <p>No product found.</p>
         ) : (
           <>
-            {filteredProducts.map((product) => {
+            {currentProducts.map((product) => {
               return (
                 <div key={product.id}>
                   {/* ...product passes all the properties of product to the child component */}

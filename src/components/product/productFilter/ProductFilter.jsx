@@ -12,10 +12,10 @@ export const ProductFilter = () => {
   const [brand, setBrand] = useState("All");
   const [price, setPrice] = useState(3000);
 
-  //get products from redux store
-  const { products } = useSelector((store) => store["product"]);
-  //get min and max product price from store
-  const { minPrice, maxPrice } = useSelector((store) => store["product"]);
+  //get products, min and max product price from redux store
+  const { products, minPrice, maxPrice } = useSelector(
+    (store) => store["product"]
+  );
 
   //create an array of categories
   const allCategories = [
