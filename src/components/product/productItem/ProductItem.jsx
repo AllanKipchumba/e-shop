@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { ADD_TO_CART } from "../../../redux/slice/cartSlice";
 import { Card } from "../../card/Card";
 import styles from "./productItem.module.scss";
 
@@ -21,6 +23,11 @@ export const ProductItem = ({
     return text;
   };
 
+  const dispatch = useDispatch();
+  const addToCart = (product) => {
+    dispatch(ADD_TO_CART(product));
+  };
+
   return (
     <Card cardClass={grid ? `${styles.grid}` : `${styles.list}`}>
       <Link to={`/product-details/${id}`}>
@@ -38,7 +45,12 @@ export const ProductItem = ({
           <p className={styles.descripton}>{shortenText(description, 200)}</p>
         )}
 
-        <button className="--btn --btn-danger">Add to Cart</button>
+        <button
+          className="--btn --btn-danger"
+          onClick={() => addToCart(product)}
+        >
+          Add to Cart
+        </button>
       </div>
     </Card>
   );
