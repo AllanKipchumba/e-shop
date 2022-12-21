@@ -20,6 +20,7 @@ const productSlice = createSlice({
                 const price = product.price;
                 return array.push(price);
             });
+            //get the max and min values from the array
             const max = Math.max(...array);
             const min = Math.min(...array);
 

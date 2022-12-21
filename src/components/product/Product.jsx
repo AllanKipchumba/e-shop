@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { FaCogs } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useFetchCollection } from "../../customHooks/useFetchCollection";
 import {
@@ -14,6 +15,8 @@ import { ProductList } from "./productList/ProductList";
 export const Product = () => {
   //use the custom hook to fetch data from products collection in firestore
   const { data, isLoading } = useFetchCollection("products");
+
+  const [showFilter, setShowFilter] = useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -34,10 +37,16 @@ export const Product = () => {
   //access products from redux store
   const { products } = useSelector((store) => store["product"]);
 
+  const toggleFilter = () => setShowFilter(!showFilter);
+
   return (
     <section>
       <div className={`container ${styles.product}`}>
-        <aside className={styles.filter}>
+        <aside
+          className={
+            showFilter ? `${styles.filter} ${styles.show}` : `${styles.filter}`
+          }
+        >
           {!isLoading && <ProductFilter />}
         </aside>
         <div className={styles.content}>
@@ -54,6 +63,13 @@ export const Product = () => {
           ) : (
             <ProductList products={products} />
           )}
+          <div className={styles.icon} onClick={toggleFilter}>
+            {" "}
+            <FaCogs size={20} color="orangered" />
+            <p>
+              <b>{!showFilter ? "Show" : "Hide"} filter</b>
+            </p>
+          </div>
         </div>
       </div>
     </section>

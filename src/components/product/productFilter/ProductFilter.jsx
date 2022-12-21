@@ -49,6 +49,7 @@ export const ProductFilter = () => {
     dispatch(FILTER_BY_PRICE({ products, price }));
   }, [dispatch, products, price]);
 
+  //clear all filters
   const clearFilers = () => {
     setCategory("All");
     setBrand("All");
