@@ -88,7 +88,7 @@ const cartSlice = createSlice({
             //update the new state
             state.cartItems = newCartItem;
 
-            toast.info(`${action.payload.name} removed from cart`, {
+            toast.warning(`${action.payload.name} removed from cart`, {
                 position: "top-left",
             });
 
