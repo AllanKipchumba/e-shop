@@ -6,13 +6,14 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { auth } from "./../../firebase/config";
 import { toast } from "react-toastify";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   SET_ACTIVE_USER,
   REMOVE_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/HiddenLink";
 import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
+import { CALCULATE_TOTAL_QUANTITY } from "../../redux/slice/cartSlice";
 
 //re-use jsx
 const logo = (
@@ -25,14 +26,6 @@ const logo = (
   </div>
 );
 
-const cart = (
-  <span className={styles.cart}>
-    <Link to="/cart">
-      Cart <FaShoppingCart size={20} />
-      <p>0</p>
-    </Link>
-  </span>
-);
 //style active link
 const activeLink = ({ isActive }) => isActive && `${styles.active}`;
 
@@ -42,6 +35,15 @@ export const Header = () => {
   const [scrollPage, setscrollPage] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  //access cartTotalQuantity from redux store
+  const { cartTotalQuantity, cartItems } = useSelector(
+    (store) => store["cart"]
+  );
+  //dispatch action to calculate cart total quantity
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  }, [dispatch, cartItems]);
 
   //make Navbar sticky
   const fixNavBar = () => {
@@ -98,6 +100,16 @@ export const Header = () => {
         toast.error(error.message);
       });
   };
+
+  //reusable cart icon
+  const cart = (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        Cart <FaShoppingCart size={20} />
+        <p>{cartTotalQuantity}</p>
+      </Link>
+    </span>
+  );
 
   return (
     <header className={scrollPage && `${styles.fixed}`}>
