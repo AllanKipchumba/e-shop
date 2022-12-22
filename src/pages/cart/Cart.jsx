@@ -1,14 +1,26 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "./Cart.module.scss";
 import { FaTrashAlt } from "react-icons/fa";
 import { Card } from "../../components/card/Card";
+import { ADD_TO_CART, DECREASE_CART } from "../../redux/slice/cartSlice";
 
 export const Cart = () => {
   const { cartItems, cartTotalQuantity, cartTotalAmount } = useSelector(
     (store) => store["cart"]
   );
+
+  const dispatch = useDispatch();
+  //increase quantity of products
+  const increaseCart = (cart) => {
+    dispatch(ADD_TO_CART(cart));
+  };
+
+  //decrease quantity of products
+  const decreaseCart = (cart) => {
+    dispatch(DECREASE_CART(cart));
+  };
 
   return (
     <section>
@@ -55,11 +67,21 @@ export const Cart = () => {
                       <td>{price}</td>
                       <td>
                         <div className={styles.count}>
-                          <button className="--btn">-</button>
+                          <button
+                            className="--btn"
+                            onClick={() => decreaseCart(cart)}
+                          >
+                            -
+                          </button>
                           <p>
                             <b>{cartQuantity}</b>
                           </p>
-                          <button className="--btn">+</button>
+                          <button
+                            className="--btn"
+                            onClick={() => increaseCart(cart)}
+                          >
+                            +
+                          </button>
                         </div>
                       </td>
                       <td>{(price * cartQuantity).toFixed(2)}</td>
