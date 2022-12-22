@@ -39,9 +39,16 @@ const activeLink = ({ isActive }) => isActive && `${styles.active}`;
 export const Header = () => {
   const [displayName, setDisplayName] = useState("");
   const [showMenu, setShowMenu] = useState(false);
+  const [scrollPage, setscrollPage] = useState(false);
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+
+  //make Navbar sticky
+  const fixNavBar = () => {
+    window.scrollY > 50 ? setscrollPage(true) : setscrollPage(false);
+  };
+  //add scroll event listener on the window
+  window.addEventListener("scroll", fixNavBar);
 
   //monitor currently signed in user
   useEffect(() => {
@@ -93,7 +100,7 @@ export const Header = () => {
   };
 
   return (
-    <header>
+    <header className={scrollPage && `${styles.fixed}`}>
       <div className={styles.header}>
         {logo}
 
