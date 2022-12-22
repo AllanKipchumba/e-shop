@@ -60,7 +60,7 @@ const cartSlice = createSlice({
                     //update the new state
                     state.cartItems = newCartItem;
 
-                    toast.success(`${action.payload.name} removed to cart`, {
+                    toast.success(`${action.payload.name} removed from cart`, {
                         position: "top-left",
                     });
                     break;
@@ -78,9 +78,25 @@ const cartSlice = createSlice({
             //save cart to local storage
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         },
+        REMOVE_FROM_CART: (state, action) => {
+            // Filter the cat items to exclude the item sent from the front-end, and return the resulting array
+            const newCartItem = state.cartItems.filter(
+                (item) => item.id !== action.payload.id
+            );
+            //update the new state
+            state.cartItems = newCartItem;
+
+            toast.success(`${action.payload.name} removed from cart`, {
+                position: "top-left",
+            });
+
+            //save cart to local storage
+            localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        },
     },
 });
 
-export const { ADD_TO_CART, DECREASE_CART } = cartSlice.actions;
+export const { ADD_TO_CART, DECREASE_CART, REMOVE_FROM_CART } =
+cartSlice.actions;
 
 export default cartSlice.reducer;

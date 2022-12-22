@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import styles from "./Cart.module.scss";
 import { FaTrashAlt } from "react-icons/fa";
 import { Card } from "../../components/card/Card";
-import { ADD_TO_CART, DECREASE_CART } from "../../redux/slice/cartSlice";
+import {
+  ADD_TO_CART,
+  DECREASE_CART,
+  REMOVE_FROM_CART,
+} from "../../redux/slice/cartSlice";
 
 export const Cart = () => {
   const { cartItems, cartTotalQuantity, cartTotalAmount } = useSelector(
@@ -12,6 +16,7 @@ export const Cart = () => {
   );
 
   const dispatch = useDispatch();
+
   //increase quantity of products
   const increaseCart = (cart) => {
     dispatch(ADD_TO_CART(cart));
@@ -20,6 +25,11 @@ export const Cart = () => {
   //decrease quantity of products
   const decreaseCart = (cart) => {
     dispatch(DECREASE_CART(cart));
+  };
+
+  //remove item from cart
+  const removeFromCart = (cart) => {
+    dispatch(REMOVE_FROM_CART(cart));
   };
 
   return (
@@ -86,7 +96,11 @@ export const Cart = () => {
                       </td>
                       <td>{(price * cartQuantity).toFixed(2)}</td>
                       <td className={styles.icons}>
-                        <FaTrashAlt size={19} color="red" />
+                        <FaTrashAlt
+                          size={19}
+                          color="red"
+                          onClick={() => removeFromCart(cart)}
+                        />
                       </td>
                     </tr>
                   );
