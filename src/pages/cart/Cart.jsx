@@ -7,6 +7,7 @@ import { Card } from "../../components/card/Card";
 import {
   ADD_TO_CART,
   CALCULATE_SUB_TOTAL,
+  CALCULATE_TOTAL_QUANTITY,
   CLEAR_CART,
   DECREASE_CART,
   REMOVE_FROM_CART,
@@ -42,6 +43,7 @@ export const Cart = () => {
   //calculate subtotal
   useEffect(() => {
     dispatch(CALCULATE_SUB_TOTAL());
+    dispatch(CALCULATE_TOTAL_QUANTITY());
   }, [dispatch, cartItems]);
 
   return (
@@ -124,17 +126,23 @@ export const Cart = () => {
               <button className="--btn --btn-danger" onClick={clearCart}>
                 Clear Cart
               </button>
+
               <div className={styles.checkout}>
                 <div>
                   <Link to="/#products">&larr; Continue shopping</Link>
                 </div>
                 <br />
+
                 <Card cardClass={styles.card}>
-                  <p>{`Cart item(s): ${cartTotalQuantity}`}</p>
+                  <p>
+                    <b>{`Cart item(s): ${cartTotalQuantity}`}</b>
+                  </p>
+
                   <div className={styles.text}>
                     <h4>Subtotal:</h4>
                     <h3>{`$${cartTotalAmount.toFixed(2)}`}</h3>
                   </div>
+
                   <p>Tax and shipping calculated at checkout</p>
                   <button className="--btn --btn-primary --btn-block">
                     Checkout
