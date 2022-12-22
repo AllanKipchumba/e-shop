@@ -34,7 +34,7 @@ const cartSlice = createSlice({
                 });
             } else {
                 //item doesn't exist in the cart
-                //add item to cart
+                //add item to cart, and append a new property cartQuantity
                 const tempProduct = {...action.payload, cartQuantity: 1 };
                 state.cartItems.push(tempProduct);
                 toast.success(`${action.payload.name} added to cart`, {
