@@ -4,7 +4,7 @@ import "./App.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //pages
-import { Home, Contact, Login, Register, Reset, Admin } from "./pages";
+import { Home, Contact, Login, Register, Reset, Admin, Cart } from "./pages";
 //components
 import { Header, Footer, AdminOnlyRoute, ProductDetails } from "./components";
 
@@ -29,6 +29,7 @@ export const App = () => {
             }
           />
           <Route path="/product-details/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
         <Footer />
       </BrowserRouter>

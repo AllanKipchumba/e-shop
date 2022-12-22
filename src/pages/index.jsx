@@ -11,3 +11,4 @@ export { Register } from "./auth/Register";
 export { Reset } from "./auth/Reset";
 
 export { Admin } from "./admin/Admin";
+export { Cart } from "./cart/Cart";
