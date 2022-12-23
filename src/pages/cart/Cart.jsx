@@ -57,11 +57,12 @@ export const Cart = () => {
   const checkout = () => {
     switch (isLoggedIn) {
       case true:
+        //redirect user to checkout page when looged in
         navigate("/checkout-details");
         break;
-      //when user is not logged in
       default:
         dispatch(SAVE_URL(url));
+        //redirect user to login page
         navigate("/login");
         break;
     }

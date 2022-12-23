@@ -3,9 +3,18 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-//pages
-import { Home, Contact, Login, Register, Reset, Admin, Cart } from "./pages";
-//components
+//import pages
+import {
+  Home,
+  Contact,
+  Login,
+  Register,
+  Reset,
+  Admin,
+  Cart,
+  CheckoutDetails,
+} from "./pages";
+//import components
 import { Header, Footer, AdminOnlyRoute, ProductDetails } from "./components";
 
 export const App = () => {
@@ -30,6 +39,7 @@ export const App = () => {
           />
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout-details" element={<CheckoutDetails />} />
         </Routes>
         <Footer />
       </BrowserRouter>
