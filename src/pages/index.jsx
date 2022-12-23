@@ -8,3 +8,4 @@ export { Reset } from "./auth/Reset";
 export { Admin } from "./admin/Admin";
 export { Cart } from "./cart/Cart";
 export { CheckoutDetails } from "./checkout/CheckoutDetails";
+export { Checkout } from "./checkout/Checkout";
