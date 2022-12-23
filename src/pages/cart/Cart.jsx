@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Cart.module.scss";
 import { FaTrashAlt } from "react-icons/fa";
 import { Card } from "../../components/card/Card";
@@ -11,14 +11,17 @@ import {
   CLEAR_CART,
   DECREASE_CART,
   REMOVE_FROM_CART,
+  SAVE_URL,
 } from "../../redux/slice/cartSlice";
 
 export const Cart = () => {
   const { cartItems, cartTotalQuantity, cartTotalAmount } = useSelector(
     (store) => store["cart"]
   );
+  const { isLoggedIn } = useSelector((store) => store["auth"]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //increase quantity of products
   const increaseCart = (cart) => {
@@ -44,7 +47,25 @@ export const Cart = () => {
   useEffect(() => {
     dispatch(CALCULATE_SUB_TOTAL());
     dispatch(CALCULATE_TOTAL_QUANTITY());
+    //make sure previousURL is empty on pageload
+    dispatch(SAVE_URL(""));
   }, [dispatch, cartItems]);
+
+  //access the page url
+  const url = window.location.href;
+
+  const checkout = () => {
+    switch (isLoggedIn) {
+      case true:
+        navigate("/checkout-details");
+        break;
+      //when user is not logged in
+      default:
+        dispatch(SAVE_URL(url));
+        navigate("/login");
+        break;
+    }
+  };
 
   return (
     <section>
@@ -144,7 +165,10 @@ export const Cart = () => {
                   </div>
 
                   <p>Tax and shipping calculated at checkout</p>
-                  <button className="--btn --btn-primary --btn-block">
+                  <button
+                    className="--btn --btn-primary --btn-block"
+                    onClick={checkout}
+                  >
                     Checkout
                   </button>
                 </Card>

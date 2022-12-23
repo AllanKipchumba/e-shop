@@ -55,7 +55,7 @@ export const Header = () => {
   //monitor currently signed in user
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
+      // console.log(user);
       if (user) {
         //create userName from email when user logs in with email and pass
         if (user.displayName == null) {
