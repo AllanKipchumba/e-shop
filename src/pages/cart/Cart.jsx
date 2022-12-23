@@ -57,7 +57,7 @@ export const Cart = () => {
   const checkout = () => {
     switch (isLoggedIn) {
       case true:
-        //redirect user to checkout page when looged in
+        //redirect user to checkout page when logged in
         navigate("/checkout-details");
         break;
       default:
