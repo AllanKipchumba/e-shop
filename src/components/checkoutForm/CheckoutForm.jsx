@@ -105,6 +105,8 @@ export const CheckoutForm = () => {
           if (result.paymentIntent.status === "succeeded") {
             setIsLoading(false);
             toast.success("payement succesful");
+
+            //save order to firebase on succesful payement
             saveOrder();
           }
         }
