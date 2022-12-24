@@ -1,14 +1,23 @@
 import React, { useEffect } from "react";
 import styles from "./checkoutSummary.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card } from "../card/Card";
-import { CALCULATE_SUB_TOTAL } from "../../redux/slice/cartSlice";
+import {
+  CALCULATE_SUB_TOTAL,
+  CALCULATE_TOTAL_QUANTITY,
+} from "../../redux/slice/cartSlice";
 
 export const CheckoutSummary = () => {
   const { cartItems, cartTotalQuantity, cartTotalAmount } = useSelector(
     (store) => store["cart"]
   );
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(CALCULATE_SUB_TOTAL());
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  }, [dispatch, cartItems]);
 
   return (
     <div>
