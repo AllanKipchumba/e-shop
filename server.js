@@ -9,10 +9,6 @@ app.use(cors());
 //  parse incoming request bodies that are in the JSON format
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Welcome to eShop website");
-});
-
 const array = [];
 const calculateOrderAmount = (items) => {
     items.map((item) => {

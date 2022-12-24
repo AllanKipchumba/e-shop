@@ -13,8 +13,8 @@ import { CheckoutForm } from "../../components/checkoutForm/CheckoutForm";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 export const Checkout = () => {
+  const [message, setMessage] = useState("Initializing Checkout...");
   const [clientSecret, setClientSecret] = useState("");
-  const [message, setMessage] = useState("Initializing Checout");
 
   //access variables from store
   const { cartItems, cartTotalAmount: totalAmount } = useSelector(
@@ -46,17 +46,15 @@ export const Checkout = () => {
         description,
       }),
     })
-      .then((res) => () => {
-        if (res.ok) {
-          return res.json();
-        }
-        //reject the promise if it isn't okay
-        return res.json().then((json) => Promise.reject(json));
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        setClientSecret(data.clientSecret);
       })
-      .then((data) => setClientSecret(data.clientSecret))
       .catch((error) => {
+        console.log(error);
         setMessage("Failed to initialize checkout");
-        toast.error(`Something went wrong`);
+        toast.error(`Something went wrong!!!`);
       });
   }, []);
 

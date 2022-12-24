@@ -14,6 +14,7 @@ import {
   Cart,
   CheckoutDetails,
   Checkout,
+  CheckoutSuccess,
 } from "./pages";
 //import components
 import { Header, Footer, AdminOnlyRoute, ProductDetails } from "./components";
@@ -42,6 +43,7 @@ export const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout-details" element={<CheckoutDetails />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout-success" element={<CheckoutSuccess />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -9,6 +9,7 @@ import {
 import { Card } from "../card/Card";
 import { CheckoutSummary } from "../checkoutSummary/CheckoutSummary";
 import spinnerImg from "../../assets/spinner.jpg";
+import { toast } from "react-toastify";
 
 export const CheckoutForm = () => {
   const stripe = useStripe();
@@ -23,47 +24,54 @@ export const CheckoutForm = () => {
     if (!stripe) {
       return;
     }
-
+    //get client secret
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"
     );
-
     //cancel out from the process if the client ticket has not loaded
     if (!clientSecret) {
       return;
     }
   }, [stripe]);
 
+  const saveOrder = () => {
+    console.log(`Order saved`);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage(null);
 
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
-      },
-    });
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
-    } else {
-      setMessage("An unexpected error occurred.");
-    }
-
+    //confirm payement
+    await stripe
+      .confirmPayment({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: "http://localhost:3000/checkout-success",
+        },
+        redirect_url: "if_required",
+      })
+      .then((result) => {
+        //result can be 1. ok - payement intent // 2. bad -error
+        if (result.error) {
+          toast.error(result.error.message);
+          setMessage(result.error.message);
+          return;
+        }
+        if (result.paymentIntent) {
+          if (result.paymentIntent.status === "succeeded") {
+            setIsLoading(false);
+            toast.success("payement succesful");
+            saveOrder();
+          }
+        }
+      });
     setIsLoading(false);
   };
 
