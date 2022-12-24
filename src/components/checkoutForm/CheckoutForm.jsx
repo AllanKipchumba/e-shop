@@ -10,14 +10,26 @@ import { Card } from "../card/Card";
 import { CheckoutSummary } from "../checkoutSummary/CheckoutSummary";
 import spinnerImg from "../../assets/spinner.jpg";
 import { toast } from "react-toastify";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { useDispatch, useSelector } from "react-redux";
+import { CLEAR_CART } from "../../redux/slice/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 export const CheckoutForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const { userID, email: userEmail } = useSelector((store) => store["auth"]);
+  const { cartItems, cartTotalAmount } = useSelector((store) => store["cart"]);
+  const { shippingAddress } = useSelector((store) => store["checkout"]);
 
   useEffect(() => {
     //cancel out from the process if tripe has not loaded
@@ -34,8 +46,33 @@ export const CheckoutForm = () => {
     }
   }, [stripe]);
 
+  //save order to firebase
   const saveOrder = () => {
-    console.log(`Order saved`);
+    const today = new Date();
+    const date = today.toDateString();
+    const time = today.toLocaleTimeString();
+    const orderConfig = {
+      userID,
+      userEmail,
+      orderDate: date,
+      orderTime: time,
+      orderAmount: cartTotalAmount,
+      orderStatus: "Order Placed...",
+      cartItems,
+      shippingAddress,
+      createdAt: Timestamp.now().toDate(),
+    };
+
+    try {
+      //create new product
+      addDoc(collection(db, "orders"), orderConfig);
+      //clear cart
+      dispatch(CLEAR_CART());
+      toast.success(`Order saved`);
+      navigate("/checkout-success");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -55,7 +92,7 @@ export const CheckoutForm = () => {
           // Make sure to change this to your payment completion page
           return_url: "http://localhost:3000/checkout-success",
         },
-        redirect_url: "if_required",
+        redirect: "if_required",
       })
       .then((result) => {
         //result can be 1. ok - payement intent // 2. bad -error
