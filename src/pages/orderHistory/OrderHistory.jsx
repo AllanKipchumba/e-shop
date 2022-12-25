@@ -21,12 +21,12 @@ export const OrderHistory = () => {
   const { orderHistory: orders } = useSelector((store) => store["orders"]);
   const { userID } = useSelector((store) => store["auth"]);
 
+  //filter ordes by userID
+  const filteredOrders = orders.filter((order) => order.userID === userID);
+
   const handleClick = (id) => {
     navigate(`/order-details/${id}`);
   };
-
-  //filter ordes by userID
-  const filteredOrders = orders.filter((order) => order.userID === userID);
 
   return (
     <section>

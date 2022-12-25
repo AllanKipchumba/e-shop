@@ -6,9 +6,10 @@ import { useFetchDocument } from "../../customHooks/useFetchDocument";
 
 export const OrderDetails = () => {
   const [order, setOrder] = useState(null);
+  //order id
   const { id } = useParams();
 
-  //fetch order details from firestore
+  //fetch the details of the order from firestore
   const { fetchedDocument } = useFetchDocument(`orders`, id);
 
   useEffect(() => {
