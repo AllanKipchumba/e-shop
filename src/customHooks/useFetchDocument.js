@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { db } from "../firebase/config";
 
-export const useFetchDocument = () => {
-    const [singleDocument, setSingleDocument] = useState(null);
+export const useFetchDocument = (collectionName, documentID) => {
+    const [fetchedDocument, setFetchedDocument] = useState(null);
 
-    const getDocument = async(collectionName, documentID) => {
+    const getDocument = async() => {
         const docRef = doc(db, collectionName, documentID);
         const docSnap = await getDoc(docRef);
 
@@ -16,8 +16,7 @@ export const useFetchDocument = () => {
                 id: documentID,
                 ...docSnap.data(),
             };
-            setSingleDocument(obj);
-            // console.log(product);
+            setFetchedDocument(obj);
         } else {
             toast.error(`Document not found`);
         }
@@ -26,5 +25,5 @@ export const useFetchDocument = () => {
         getDocument();
     }, []);
 
-    return singleDocument;
+    return { fetchedDocument };
 };

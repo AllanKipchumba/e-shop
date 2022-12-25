@@ -1,9 +1,6 @@
 import styles from "./productDetails.module.scss";
-import { doc, getDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { db } from "../../../firebase/config";
 import { Loader } from "../../loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -18,33 +15,12 @@ export const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const dispatch = useDispatch();
 
-  //get a single product from firestore
-  const singleDocument = useFetchDocument("products", id);
-  console.log(singleDocument);
+  // get the product from firestore using the custom hook
+  const { fetchedDocument } = useFetchDocument(`products`, id);
+
   useEffect(() => {
-    setProduct(singleDocument);
-  }, [singleDocument]);
-
-  //get a single product from firestore
-  // const getProduct = async () => {
-  //   const docRef = doc(db, "products", id);
-  //   const docSnap = await getDoc(docRef);
-
-  //   if (docSnap.exists()) {
-  //     //add an id property to docSnap
-  //     const obj = {
-  //       id,
-  //       ...docSnap.data(),
-  //     };
-  //     setProduct(obj);
-  //     // console.log(product);
-  //   } else {
-  //     toast.error("No doc");
-  //   }
-  // };
-  // useEffect(() => {
-  //   getProduct();
-  // }, []);
+    setProduct(fetchedDocument);
+  }, [fetchedDocument]);
 
   //access cartItems from store
   const { cartItems } = useSelector((store) => store["cart"]);
