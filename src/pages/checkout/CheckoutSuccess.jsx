@@ -9,9 +9,9 @@ export const CheckoutSuccess = () => {
         <p>Thank you for your purchase</p>
         <br />
 
-        <Link to="order-history">
-          <button className="--btn --btn-primary">View order status</button>
-        </Link>
+        <button className="--btn --btn-primary">
+          <Link to="/order-history"> View order status</Link>
+        </button>
       </div>
     </section>
   );

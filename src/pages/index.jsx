@@ -10,3 +10,5 @@ export { Cart } from "./cart/Cart";
 export { CheckoutDetails } from "./checkout/CheckoutDetails";
 export { Checkout } from "./checkout/Checkout";
 export { CheckoutSuccess } from "./checkout/CheckoutSuccess";
+export { OrderHistory } from "./orderHistory/OrderHistory";
+export { OrderDetails } from "./oderDetails/OrderDetails";

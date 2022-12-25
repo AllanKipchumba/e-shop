@@ -51,6 +51,7 @@ export const CheckoutForm = () => {
     const today = new Date();
     const date = today.toDateString();
     const time = today.toLocaleTimeString();
+
     const orderConfig = {
       userID,
       userEmail,
@@ -64,7 +65,7 @@ export const CheckoutForm = () => {
     };
 
     try {
-      //create new product
+      //create order new order with the schema of order config
       addDoc(collection(db, "orders"), orderConfig);
       //clear cart
       dispatch(CLEAR_CART());

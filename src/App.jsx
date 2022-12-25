@@ -15,7 +15,10 @@ import {
   CheckoutDetails,
   Checkout,
   CheckoutSuccess,
+  OrderHistory,
+  OrderDetails,
 } from "./pages";
+
 //import components
 import { Header, Footer, AdminOnlyRoute, ProductDetails } from "./components";
 
@@ -44,6 +47,8 @@ export const App = () => {
           <Route path="/checkout-details" element={<CheckoutDetails />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout-success" element={<CheckoutSuccess />} />
+          <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/order-details/:id" element={<OrderDetails />} />
         </Routes>
         <Footer />
       </BrowserRouter>
