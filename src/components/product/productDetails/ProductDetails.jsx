@@ -11,32 +11,40 @@ import {
   CALCULATE_TOTAL_QUANTITY,
   DECREASE_CART,
 } from "../../../redux/slice/cartSlice";
+import { useFetchDocument } from "../../../customHooks/useFetchDocument";
 
 export const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const dispatch = useDispatch();
 
-  //get product from firestore
-  const getProduct = async () => {
-    const docRef = doc(db, "products", id);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      //add an id property to docSnap
-      const obj = {
-        id,
-        ...docSnap.data(),
-      };
-      setProduct(obj);
-      // console.log(product);
-    } else {
-      toast.error("No document");
-    }
-  };
+  //get a single product from firestore
+  const singleDocument = useFetchDocument("products", id);
+  console.log(singleDocument);
   useEffect(() => {
-    getProduct();
-  }, []);
+    setProduct(singleDocument);
+  }, [singleDocument]);
+
+  //get a single product from firestore
+  // const getProduct = async () => {
+  //   const docRef = doc(db, "products", id);
+  //   const docSnap = await getDoc(docRef);
+
+  //   if (docSnap.exists()) {
+  //     //add an id property to docSnap
+  //     const obj = {
+  //       id,
+  //       ...docSnap.data(),
+  //     };
+  //     setProduct(obj);
+  //     // console.log(product);
+  //   } else {
+  //     toast.error("No doc");
+  //   }
+  // };
+  // useEffect(() => {
+  //   getProduct();
+  // }, []);
 
   //access cartItems from store
   const { cartItems } = useSelector((store) => store["cart"]);

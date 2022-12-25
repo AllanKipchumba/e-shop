@@ -25,7 +25,7 @@ export const OrderHistory = () => {
     navigate(`/order-details/${id}`);
   };
 
-  //filter orders
+  //filter ordes by userID
   const filteredOrders = orders.filter((order) => order.userID === userID);
 
   return (
