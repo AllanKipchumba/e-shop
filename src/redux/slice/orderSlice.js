@@ -1,13 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+    orderHistory: [],
+};
 
 const orderSlice = createSlice({
     name: "orders",
     initialState,
-    reducers: {},
+    reducers: {
+        STORE_ORDERS: (state, action) => {
+            state.orderHistory = action.payload;
+        },
+    },
 });
 
-export const {} = orderSlice.actions;
+export const { STORE_ORDERS } = orderSlice.actions;
 
 export default orderSlice.reducer;
