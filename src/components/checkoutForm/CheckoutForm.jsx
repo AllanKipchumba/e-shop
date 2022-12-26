@@ -65,7 +65,7 @@ export const CheckoutForm = () => {
     };
 
     try {
-      //create order new order with the schema of order config
+      //create a orders collection with the schema of order config
       addDoc(collection(db, "orders"), orderConfig);
       //clear cart
       dispatch(CLEAR_CART());

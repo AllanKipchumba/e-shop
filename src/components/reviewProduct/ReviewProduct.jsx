@@ -1,37 +1,76 @@
-import React, { useState } from "react";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import StarsRating from "react-star-rate";
+import { toast } from "react-toastify";
+import { useFetchDocument } from "../../customHooks/useFetchDocument";
+import { db } from "../../firebase/config";
 import { Card } from "../card/Card";
 import styles from "./reviewProduct.module.scss";
+import spinnerImg from "../../assets/spinner.jpg";
 
 export const ReviewProduct = () => {
   const [rate, setRate] = useState(0);
   const [review, setReview] = useState("");
+  const [product, setProduct] = useState(null);
   const { id } = useParams();
 
-  const { products } = useSelector((store) => store["product"]);
   const { userID, userName } = useSelector((store) => store["auth"]);
 
-  const product = products.find((item) => item.id === id);
+  //fetch the product to review from firestore
+  const { fetchedDocument } = useFetchDocument("products", id);
+
+  useEffect(() => {
+    setProduct(fetchedDocument);
+  }, [fetchedDocument]);
 
   const submitReview = (e) => {
     e.preventDefault();
-    console.log(rate, review);
+
+    const today = new Date();
+    const date = today.toDateString();
+
+    const reviewConfig = {
+      userID,
+      userName,
+      productID: id,
+      rate,
+      review,
+      reviewDate: date,
+      createdAt: Timestamp.now().toDate(),
+    };
+
+    try {
+      //create a reviews collection with the schema of review config
+      addDoc(collection(db, "reviews"), reviewConfig);
+      toast.success(`Review submitted succesfuly`);
+      //empty the input fields
+      setRate(0);
+      setReview("");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
     <section>
       <div className={`container ${styles.review}`}>
         <h2>ReviewProduct</h2>
-        <p>
-          <b>Product name:</b> {product.name}
-        </p>
-        <img
-          src={product.imageURL}
-          alt={product.name}
-          style={{ width: "100px" }}
-        />
+        {product === null ? (
+          <img src={spinnerImg} alt="Loading..." style={{ width: "50px" }} />
+        ) : (
+          <>
+            <p>
+              <b>Product name:</b> {product.name}
+            </p>
+            <img
+              src={product.imageURL}
+              alt={product.name}
+              style={{ width: "100px" }}
+            />
+          </>
+        )}
 
         <Card cardClass={styles.card}>
           <form onSubmit={(e) => submitReview(e)}>
