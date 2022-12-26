@@ -13,3 +13,6 @@ export { Home } from "./admin/home/Home";
 export { Navbar } from "./admin/navbar/Navbar";
 export { ViewProducts } from "./admin/viewProduct/ViewProducts";
 export { ReviewProduct } from "./reviewProduct/ReviewProduct";
+//admin-related components
+export { InfoBox } from "./infoBox/InfoBox";
+export { Chart } from "./chart/Chart";

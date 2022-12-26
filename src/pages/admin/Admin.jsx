@@ -3,10 +3,10 @@ import { Routes, Route } from "react-router-dom";
 import styles from "./Admin.module.scss";
 import {
   Navbar,
-  Home,
   ViewProducts,
   AddProduct,
   Orders,
+  Home,
 } from "../../components";
 
 export const Admin = () => {
