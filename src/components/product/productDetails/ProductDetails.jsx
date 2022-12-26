@@ -9,6 +9,9 @@ import {
   DECREASE_CART,
 } from "../../../redux/slice/cartSlice";
 import { useFetchDocument } from "../../../customHooks/useFetchDocument";
+import { useFetchCollection } from "../../../customHooks/useFetchCollection";
+import { Card } from "../../card/Card";
+import StarsRating from "react-star-rate";
 
 export const ProductDetails = () => {
   const { id } = useParams();
@@ -17,6 +20,10 @@ export const ProductDetails = () => {
 
   // get the product from firestore using the custom hook
   const { fetchedDocument } = useFetchDocument(`products`, id);
+  //get reviews from firebase
+  const { data: reviews } = useFetchCollection("reviews");
+
+  const filteredReview = reviews.filter((rev) => rev.productID === id);
 
   useEffect(() => {
     setProduct(fetchedDocument);
@@ -105,6 +112,33 @@ export const ProductDetails = () => {
             </div>
           </>
         )}
+
+        <Card cardClass={styles.card}>
+          <h3>Product Reviews</h3>
+          {filteredReview.length === 0 ? (
+            <p>There are no reviews for this product yet</p>
+          ) : (
+            <>
+              {filteredReview.map((Review, index) => {
+                const { rate, review, reviewDate, userName } = Review;
+
+                return (
+                  <div className={styles.review}>
+                    <StarsRating value={rate} />
+                    <p>{review}</p>
+                    <span>
+                      <b>{reviewDate}</b>
+                    </span>
+                    <br />
+                    <span>
+                      by:<b> {userName}</b>
+                    </span>
+                  </div>
+                );
+              })}
+            </>
+          )}
+        </Card>
       </div>
     </section>
   );
