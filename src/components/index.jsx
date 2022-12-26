@@ -16,3 +16,5 @@ export { ReviewProduct } from "./reviewProduct/ReviewProduct";
 //admin-related components
 export { InfoBox } from "./infoBox/InfoBox";
 export { Chart } from "./chart/Chart";
+export { OrderDetails } from "./admin/orderDetails/OrderDetails";
+export { ChangeOrderStatus } from "./admin/changeOrderStatus/ChangeOrderStatus";
