@@ -20,7 +20,13 @@ import {
 } from "./pages";
 
 //import components
-import { Header, Footer, AdminOnlyRoute, ProductDetails } from "./components";
+import {
+  Header,
+  Footer,
+  AdminOnlyRoute,
+  ProductDetails,
+  ReviewProduct,
+} from "./components";
 
 export const App = () => {
   return (
@@ -49,6 +55,7 @@ export const App = () => {
           <Route path="/checkout-success" element={<CheckoutSuccess />} />
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
+          <Route path="/review-product/:id" element={<ReviewProduct />} />
         </Routes>
         <Footer />
       </BrowserRouter>

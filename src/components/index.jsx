@@ -12,3 +12,4 @@ export { AddProduct } from "./admin/addProduct/AddProduct";
 export { Home } from "./admin/home/Home";
 export { Navbar } from "./admin/navbar/Navbar";
 export { ViewProducts } from "./admin/viewProduct/ViewProducts";
+export { ReviewProduct } from "./reviewProduct/ReviewProduct";
