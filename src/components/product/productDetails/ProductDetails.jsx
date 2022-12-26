@@ -123,7 +123,7 @@ export const ProductDetails = () => {
                 const { rate, review, reviewDate, userName } = Review;
 
                 return (
-                  <div className={styles.review}>
+                  <div className={styles.review} key={index}>
                     <StarsRating value={rate} />
                     <p>{review}</p>
                     <span>
