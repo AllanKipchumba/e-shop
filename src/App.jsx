@@ -17,6 +17,7 @@ import {
   CheckoutSuccess,
   OrderHistory,
   OrderDetails,
+  NotFound,
 } from "./pages";
 
 //import components
@@ -56,6 +57,7 @@ export const App = () => {
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
           <Route path="/review-product/:id" element={<ReviewProduct />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </BrowserRouter>

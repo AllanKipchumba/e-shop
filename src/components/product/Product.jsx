@@ -6,11 +6,10 @@ import {
   GET_PRICE_RANGE,
   STORE_PRODUCTS,
 } from "../../redux/slice/productSlice";
-import { Loader } from "../loader/Loader";
 import styles from "./product.module.scss";
 import { ProductFilter } from "./productFilter/ProductFilter";
 import { ProductList } from "./productList/ProductList";
-// import spinnerImg from "../../assets/spinner.jpg";
+import spinnerImg from "../../assets/spinner.jpg";
 
 export const Product = () => {
   //use the custom hook to fetch data from products collection in firestore
@@ -52,13 +51,12 @@ export const Product = () => {
         <div className={styles.content}>
           {isLoading ? (
             <>
-              {/* <img
-              src={spinnerImg}
-              alt="Loading..."
-              style={{ width: "50px" }}
-              className="--center-all"
-            /> */}
-              <Loader />
+              <img
+                src={spinnerImg}
+                alt="Loading..."
+                style={{ width: "50px" }}
+                className="--center-all"
+              />
             </>
           ) : (
             <ProductList products={products} />
