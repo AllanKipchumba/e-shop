@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Card } from "../../components/card/Card";
 import styles from "./Contact.module.scss";
 import { FaPhoneAlt, FaEnvelope, FaTwitter } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
+import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
 
 export const Contact = () => {
+  const form = useRef();
+
   const sendEmail = (e) => {
     e.preventDefault();
+
+    emailjs
+      .sendForm(
+        process.env.REACT_APP_EMAILJS_SERVICE_KEY,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        form.current,
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        (result) => {
+          toast.success(`Message sent succesfully`);
+        },
+        (error) => {
+          toast.error(error.text);
+        }
+      );
+
+    //reset the form fields
+    e.target.reset();
   };
 
   return (
@@ -14,7 +37,7 @@ export const Contact = () => {
       <div className={`container ${styles.contact}`}>
         <h2>Contact Us</h2>
         <div className={styles.section}>
-          <form onSubmit={(e) => sendEmail(e)}>
+          <form ref={form} onSubmit={sendEmail}>
             <Card cardClass={styles.card}>
               <label>Name</label>
               <input
@@ -40,7 +63,9 @@ export const Contact = () => {
               <label>Message</label>
               <textarea name="message" cols="30" rows="10"></textarea>
 
-              <button className="--btn --btn-primary">Send Message</button>
+              <button className="--btn --btn-primary" type="submit">
+                Send Message
+              </button>
             </Card>
           </form>
 
