@@ -27,7 +27,7 @@ export const Orders = () => {
   return (
     <>
       <div className={`${styles.order}`}>
-        <h2>Your Order History</h2>
+        <h2>Orders</h2>
         <p>
           Open an order to leave a <b>Change order Status</b>
         </p>

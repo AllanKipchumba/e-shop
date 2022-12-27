@@ -17,8 +17,7 @@ export const OrderDetails = () => {
     setOrder(fetchedDocument);
   }, [fetchedDocument]);
 
-  const { line1, line2, city, state, country } = order.shippingAddress;
-  console.log(order);
+  // const { line1, line2, city, state, country } = order.shippingAddress;
   return (
     <>
       <div className={styles.table}>
@@ -46,11 +45,12 @@ export const OrderDetails = () => {
             <p>
               <b>Shipping Address: </b>
               <br />
-              Address: {line1}, {line2}, {city}
+              Address: {order.shippingAddress.line1},{" "}
+              {order.shippingAddress.line2}, {order.shippingAddress.city}
               <br />
-              State: {state}
+              State: {order.shippingAddress.state}
               <br />
-              Country: {country}
+              Country: {order.shippingAddress.country}
             </p>
 
             <br />
@@ -93,10 +93,10 @@ export const OrderDetails = () => {
                 })}
               </tbody>
             </table>
+
+            <ChangeOrderStatus order={order} id={id} />
           </>
         )}
-
-        <ChangeOrderStatus />
       </div>
     </>
   );
