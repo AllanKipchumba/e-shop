@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useFetchDocument } from "../../../customHooks/useFetchDocument";
 import styles from "./orderDetails.module.scss";
 import spinnerImg from "../../../assets/spinner.jpg";
+import { ChangeOrderStatus } from "../changeOrderStatus/ChangeOrderStatus";
 
 export const OrderDetails = () => {
   const [order, setOrder] = useState(null);
@@ -94,6 +95,8 @@ export const OrderDetails = () => {
             </table>
           </>
         )}
+
+        <ChangeOrderStatus />
       </div>
     </>
   );
