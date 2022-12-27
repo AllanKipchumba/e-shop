@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { STORE_PRODUCTS } from "../../../redux/slice/productSlice";
 import { useFetchCollection } from "../../../customHooks/useFetchCollection";
 import { FILTER_BY_SEARCH } from "../../../redux/slice/filterSlice";
+import { Pagination } from "../../pagination/Pagination";
 
 const { log } = console;
 
@@ -32,6 +33,20 @@ export const ViewProducts = () => {
   //access products from redux store
   const { products } = useSelector((store) => store["product"]);
   const { filteredProducts } = useSelector((store) => store["filter"]);
+
+  //pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(10);
+
+  //get current Products
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+
+  //Return a subarray of elements from the filtered products array, starting at the firstProductIndex and ending at (and not including) the lastProductIndex
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   //dispatch products to redux
   useEffect(() => {
@@ -111,7 +126,7 @@ export const ViewProducts = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredProducts.map((product, index) => {
+              {currentProducts.map((product, index) => {
                 const { id, name, price, imageURL, category } = product;
                 return (
                   <tr key={id}>
@@ -143,6 +158,13 @@ export const ViewProducts = () => {
             </tbody>
           </table>
         )}
+
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          productsPerPage={productsPerPage}
+          totalProducts={filteredProducts.length}
+        />
       </div>
     </>
   );
