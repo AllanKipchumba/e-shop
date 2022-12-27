@@ -37,6 +37,7 @@ const options = {
 
 const labels = ["Placed Orders", "Processing", "Shipped", "Delivered"];
 
+//Chart component
 export const Chart = () => {
   //get orders from redux store
   const { orderHistory: orders } = useSelector((store) => store["orders"]);

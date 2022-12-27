@@ -12,22 +12,27 @@ import {
 import { db, storage } from "../../../firebase/config";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import { Loader } from "../../index";
+import { Loader, Search } from "../../index";
 import { deleteObject, ref } from "firebase/storage";
 import Notiflix from "notiflix";
 import { useDispatch, useSelector } from "react-redux";
 import { STORE_PRODUCTS } from "../../../redux/slice/productSlice";
 import { useFetchCollection } from "../../../customHooks/useFetchCollection";
+import { FILTER_BY_SEARCH } from "../../../redux/slice/filterSlice";
 
 const { log } = console;
 
 export const ViewProducts = () => {
-  //access firestore data fetched by the useFEtchCollection customhook
+  const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
+
+  //access products from firestore using useFetchCollection customhook
   const { data, isLoading } = useFetchCollection("products");
+
   //access products from redux store
   const { products } = useSelector((store) => store["product"]);
+  const { filteredProducts } = useSelector((store) => store["filter"]);
 
-  const dispatch = useDispatch();
   //dispatch products to redux
   useEffect(() => {
     dispatch(
@@ -36,6 +41,11 @@ export const ViewProducts = () => {
       })
     );
   }, [dispatch, data]);
+
+  //filter products by search
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ products, search }));
+  }, [dispatch, products, search]);
 
   //DELETE PRODUCT
   const deleteProduct = async (id, imageURL) => {
@@ -79,7 +89,14 @@ export const ViewProducts = () => {
       <div className={styles.table}>
         <h2>All Products</h2>
 
-        {products.length === 0 ? (
+        <div className={styles.search}>
+          <p>
+            <b>{filteredProducts.length}</b> products found
+          </p>
+          <Search value={search} onChange={(e) => setSearch(e.target.value)} />
+        </div>
+
+        {filteredProducts.length === 0 ? (
           <p>No product found.</p>
         ) : (
           <table>
@@ -94,7 +111,7 @@ export const ViewProducts = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) => {
+              {filteredProducts.map((product, index) => {
                 const { id, name, price, imageURL, category } = product;
                 return (
                   <tr key={id}>
