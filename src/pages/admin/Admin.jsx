@@ -7,6 +7,7 @@ import {
   AddProduct,
   Orders,
   Home,
+  OrderDetails,
 } from "../../components";
 
 export const Admin = () => {
@@ -21,6 +22,7 @@ export const Admin = () => {
           <Route path="all-products" element={<ViewProducts />} />
           <Route path="add-product/:id" element={<AddProduct />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="order-details/:id" element={<OrderDetails />} />
         </Routes>
       </div>
     </div>
