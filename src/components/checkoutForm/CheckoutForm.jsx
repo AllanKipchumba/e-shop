@@ -2,7 +2,7 @@ import styles from "./checkoutForm.module.scss";
 import React, { useEffect, useState } from "react";
 import {
   PaymentElement,
-  LinkAuthenticationElement,
+  // LinkAuthenticationElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
@@ -17,7 +17,7 @@ import { CLEAR_CART } from "../../redux/slice/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 export const CheckoutForm = () => {
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
