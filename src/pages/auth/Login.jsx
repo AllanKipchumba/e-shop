@@ -42,6 +42,7 @@ export const Login = () => {
         // ...
       })
       .catch((error) => {
+        setIsLoading(false);
         toast.error(error.message);
       });
   };
