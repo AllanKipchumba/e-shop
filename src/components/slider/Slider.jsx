@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import "./Slider.scss";
 import { sliderData } from "./slider-data";
-import { Link } from "react-router-dom";
 
 export const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -57,9 +56,9 @@ export const Slider = () => {
                   <h2>{heading}</h2>
                   <p>{desc}</p>
                   <hr />
-                  <button className="--btn --btn-primary">
-                    <Link to="/#products"> Shop Now</Link>
-                  </button>
+                  <a href="#product" className="--btn --btn-primary">
+                    Shop Now
+                  </a>
                 </div>
               </>
             )}
