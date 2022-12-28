@@ -56,7 +56,7 @@ export const Checkout = () => {
         setMessage("Failed to initialize checkout");
         toast.error(`Something went wrong!!!`);
       });
-  }, []);
+  }, [billingAddress, shippingAddress, cartItems, description, customerEmail]);
 
   const appearance = {
     theme: "stripe",

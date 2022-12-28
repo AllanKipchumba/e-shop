@@ -65,9 +65,8 @@ export const CheckoutForm = () => {
     };
 
     try {
-      //create a orders collection with the schema of order config
+      //create new order instance
       addDoc(collection(db, "orders"), orderConfig);
-      //clear cart
       dispatch(CLEAR_CART());
       toast.success(`Order saved`);
       navigate("/checkout-success");
