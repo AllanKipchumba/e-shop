@@ -16,8 +16,14 @@ export const Register = () => {
   const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+
+  //toggle password visibility
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const registerUser = (e) => {
     e.preventDefault();
@@ -56,19 +62,25 @@ export const Register = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+
               <div className={registerStyles.password}>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <AiOutlineEye size="18" className={registerStyles.icon} />
-                <AiOutlineEyeInvisible
-                  size="18"
+                <span
                   className={registerStyles.icon}
-                />
+                  onClick={handleTogglePassword}
+                >
+                  {showPassword ? (
+                    <AiOutlineEyeInvisible size="18" />
+                  ) : (
+                    <AiOutlineEye size="18" />
+                  )}
+                </span>
               </div>
               {/* <input
                 type="password"
