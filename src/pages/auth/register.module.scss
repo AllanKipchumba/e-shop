@@ -8,3 +8,24 @@
         cursor: pointer;
     }
 }
+
+.password-strength {
+    background-color: #d3d3d3;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    ul {
+        list-style: none;
+        li {
+            position: relative;
+            span {
+                display: flex;
+                font-size: 12px;
+                & :first-child {
+                    position: absolute;
+                    top: 2px;
+                }
+            }
+        }
+    }
+}

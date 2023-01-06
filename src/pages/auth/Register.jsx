@@ -97,31 +97,31 @@ export const Register = () => {
               </button>
 
               {/* PASSWORD STRENGTH INDICATOR */}
-              <div>
+              <div className={registerStyles["password-strength"]}>
                 <ul>
                   <p>Password Strength Indicator</p>
                   <li>
                     <span>
                       <GoPrimitiveDot />
-                      &nbsp; Lowercase & Uppercase
+                      &nbsp; &nbsp; &nbsp; Lowercase & Uppercase
                     </span>
                   </li>
                   <li>
                     <span>
                       <GoPrimitiveDot />
-                      &nbsp; Numbers (0-9)
+                      &nbsp; &nbsp; &nbsp; Numbers (0-9)
                     </span>
                   </li>
                   <li>
                     <span>
                       <GoPrimitiveDot />
-                      &nbsp; Special Character (!@#$%^&*)
+                      &nbsp; &nbsp; &nbsp; Special Character (!@#$%^&*)
                     </span>
                   </li>
                   <li>
                     <span>
                       <GoPrimitiveDot />
-                      &nbsp; At least 8 characters
+                      &nbsp; &nbsp; &nbsp; At least 8 characters
                     </span>
                   </li>
                 </ul>
