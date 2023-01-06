@@ -8,7 +8,7 @@ import { auth } from "../../firebase/config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Loader } from "./../../components/loader/Loader";
 import { toast } from "react-toastify";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export const Register = () => {
   //input fields
@@ -64,8 +64,11 @@ export const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <AiFillEye size="18" className={registerStyles.icon} />
-                <AiFillEyeInvisible size="18" className={registerStyles.icon} />
+                <AiOutlineEye size="18" className={registerStyles.icon} />
+                <AiOutlineEyeInvisible
+                  size="18"
+                  className={registerStyles.icon}
+                />
               </div>
               {/* <input
                 type="password"
