@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Auth.module.scss";
+import registerStyles from "./register.module.scss";
 import registerImg from "../../assets/register.png";
 import { Card } from "../../components/card/Card";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,12 +8,13 @@ import { auth } from "../../firebase/config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Loader } from "./../../components/loader/Loader";
 import { toast } from "react-toastify";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 export const Register = () => {
   //input fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ export const Register = () => {
   const registerUser = (e) => {
     e.preventDefault();
 
-    password !== confirmPassword && toast("Passwords do not match...!");
+    // password !== confirmPassword && toast("Passwords do not match...!");
     setIsLoading(true);
 
     createUserWithEmailAndPassword(auth, email, password)
@@ -54,20 +56,24 @@ export const Register = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <input
-                type="password"
-                placeholder="Password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <input
+              <div className={registerStyles.password}>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <AiFillEye size="18" className={registerStyles.icon} />
+                <AiFillEyeInvisible size="18" className={registerStyles.icon} />
+              </div>
+              {/* <input
                 type="password"
                 placeholder="Confirm password"
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-              />
+              /> */}
 
               <button className="--btn --btn-primary --btn-block" type="submit">
                 Register
