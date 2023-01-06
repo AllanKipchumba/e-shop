@@ -19,13 +19,14 @@ export const Register = () => {
   // const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showIndicator, setShowIndicator] = useState(false);
 
   const navigate = useNavigate();
 
   //toggle password visibility
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const handleTogglePassword = () => setShowPassword(!showPassword);
+  //show password indicator
+  const handleShowIndicator = () => setShowIndicator(true);
 
   const registerUser = (e) => {
     e.preventDefault();
@@ -71,6 +72,7 @@ export const Register = () => {
                   placeholder="Password"
                   required
                   value={password}
+                  onFocus={handleShowIndicator}
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <span
@@ -97,7 +99,13 @@ export const Register = () => {
               </button>
 
               {/* PASSWORD STRENGTH INDICATOR */}
-              <div className={registerStyles["password-strength"]}>
+              <div
+                className={`${registerStyles["password-strength"]} ${
+                  showIndicator
+                    ? registerStyles["show-indicator"]
+                    : registerStyles["hide-indicator"]
+                }`}
+              >
                 <ul>
                   <p>Password Strength Indicator</p>
                   <li>
