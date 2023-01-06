@@ -9,6 +9,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Loader } from "./../../components/loader/Loader";
 import { toast } from "react-toastify";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { GoPrimitiveDot } from "react-icons/go";
+import { FaCheck } from "react-icons/fa";
 
 export const Register = () => {
   //input fields
@@ -93,6 +95,37 @@ export const Register = () => {
               <button className="--btn --btn-primary --btn-block" type="submit">
                 Register
               </button>
+
+              {/* PASSWORD STRENGTH INDICATOR */}
+              <div>
+                <ul>
+                  <p>Password Strength Indicator</p>
+                  <li>
+                    <span>
+                      <GoPrimitiveDot />
+                      &nbsp; Lowercase & Uppercase
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <GoPrimitiveDot />
+                      &nbsp; Numbers (0-9)
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <GoPrimitiveDot />
+                      &nbsp; Special Character (!@#$%^&*)
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <GoPrimitiveDot />
+                      &nbsp; At least 8 characters
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </form>
 
             <span className={styles.register}>
