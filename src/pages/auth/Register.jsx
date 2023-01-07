@@ -31,13 +31,23 @@ export const Register = () => {
 
   console.log(password);
 
-  //monitor if requirements for strong password is met
+  //monitor if requirements for strong password are met
   useEffect(() => {
     //check lowercase and uppercase
-    // passChar.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/))
-    if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
-      setPassLetter(true);
-    }
+    password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)
+      ? setPassLetter(true)
+      : setPassLetter(false);
+
+    //check for numbers
+    password.match(/([0-9])/) ? setPassNumber(true) : setPassNumber(false);
+
+    //check for special character
+    password.match(/([!,@,#,$,%,^,*,?,~,_])/)
+      ? setPassChar(true)
+      : setPassChar(false);
+
+    //check if password is greater than 8
+    password.length > 7 ? setPassLength(true) : setPassLength(false);
   }, [password]);
 
   const registerUser = (e) => {
@@ -135,21 +145,39 @@ export const Register = () => {
                       &nbsp; &nbsp; &nbsp; Lowercase & Uppercase
                     </span>
                   </li>
-                  <li>
+                  <li
+                    className={
+                      passNumber
+                        ? `${styles["pass-green"]}`
+                        : `${styles["pass-red"]}`
+                    }
+                  >
                     <span>
-                      <GoPrimitiveDot />
+                      {passNumber ? <FaCheck /> : <GoPrimitiveDot />}
                       &nbsp; &nbsp; &nbsp; Numbers (0-9)
                     </span>
                   </li>
-                  <li>
+                  <li
+                    className={
+                      passChar
+                        ? `${styles["pass-green"]}`
+                        : `${styles["pass-red"]}`
+                    }
+                  >
                     <span>
-                      <GoPrimitiveDot />
+                      {passChar ? <FaCheck /> : <GoPrimitiveDot />}
                       &nbsp; &nbsp; &nbsp; Special Character (!@#$%^&*)
                     </span>
                   </li>
-                  <li>
+                  <li
+                    className={
+                      passLength
+                        ? `${styles["pass-green"]}`
+                        : `${styles["pass-red"]}`
+                    }
+                  >
                     <span>
-                      <GoPrimitiveDot />
+                      {passLength ? <FaCheck /> : <GoPrimitiveDot />}
                       &nbsp; &nbsp; &nbsp; At least 8 characters
                     </span>
                   </li>
