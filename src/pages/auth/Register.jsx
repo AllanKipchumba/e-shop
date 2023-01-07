@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Auth.module.scss";
 import registerStyles from "./register.module.scss";
 import registerImg from "../../assets/register.png";
@@ -13,6 +13,7 @@ import { GoPrimitiveDot } from "react-icons/go";
 import { FaCheck } from "react-icons/fa";
 
 export const Register = () => {
+  const navigate = useNavigate();
   //input fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,12 +22,23 @@ export const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showIndicator, setShowIndicator] = useState(false);
 
-  const navigate = useNavigate();
+  //pasword strength states
+  const [passLetter, setPassLetter] = useState(false);
+  const [passNumber, setPassNumber] = useState(false);
+  const [passChar, setPassChar] = useState(false);
+  const [passLength, setPassLength] = useState(false);
+  const [passComplete, setPassComplete] = useState(false);
 
-  //toggle password visibility
-  const handleTogglePassword = () => setShowPassword(!showPassword);
-  //show password indicator
-  const handleShowIndicator = () => setShowIndicator(true);
+  console.log(password);
+
+  //monitor if requirements for strong password is met
+  useEffect(() => {
+    //check lowercase and uppercase
+    // passChar.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/))
+    if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
+      setPassLetter(true);
+    }
+  }, [password]);
 
   const registerUser = (e) => {
     e.preventDefault();
@@ -66,18 +78,19 @@ export const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
 
+              {/* PASSWORD */}
               <div className={registerStyles.password}>
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   required
                   value={password}
-                  onFocus={handleShowIndicator}
+                  onFocus={() => setShowIndicator(true)}
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <span
                   className={registerStyles.icon}
-                  onClick={handleTogglePassword}
+                  onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
                     <AiOutlineEyeInvisible size="18" />
@@ -94,6 +107,8 @@ export const Register = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               /> */}
 
+              {/* PASSWORD */}
+
               <button className="--btn --btn-primary --btn-block" type="submit">
                 Register
               </button>
@@ -108,9 +123,15 @@ export const Register = () => {
               >
                 <ul>
                   <p>Password Strength Indicator</p>
-                  <li>
+                  <li
+                    className={
+                      passLetter
+                        ? `${styles["pass-green"]}`
+                        : `${styles["pass-red"]}`
+                    }
+                  >
                     <span>
-                      <GoPrimitiveDot />
+                      {passLetter ? <FaCheck /> : <GoPrimitiveDot />}
                       &nbsp; &nbsp; &nbsp; Lowercase & Uppercase
                     </span>
                   </li>
