@@ -27,7 +27,7 @@ export const Register = () => {
   const [passNumber, setPassNumber] = useState(false);
   const [passChar, setPassChar] = useState(false);
   const [passLength, setPassLength] = useState(false);
-  const [passComplete, setPassComplete] = useState(false);
+  // const [passComplete, setPassComplete] = useState(false);
 
   console.log(password);
 
@@ -59,7 +59,7 @@ export const Register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
+        // const user = userCredential.user;
         setIsLoading(false);
         navigate("/");
       })
