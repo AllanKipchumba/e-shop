@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import styles from "./viewProducts.module.scss";
 import {
-  collection,
+  // collection,
   deleteDoc,
   doc,
-  onSnapshot,
-  orderBy,
-  query,
+  // onSnapshot,
+  // orderBy,
+  // query,
 } from "firebase/firestore";
 import { db, storage } from "../../../firebase/config";
 import { Link } from "react-router-dom";
@@ -36,7 +36,7 @@ export const ViewProducts = () => {
 
   //pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(10);
+  const [productsPerPage, ] = useState(10);
 
   //get current Products
   const indexOfLastProduct = currentPage * productsPerPage;
