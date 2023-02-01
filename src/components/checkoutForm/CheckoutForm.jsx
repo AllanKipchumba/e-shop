@@ -40,6 +40,7 @@ export const CheckoutForm = () => {
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"
     );
+    console.log(clientSecret);
     //cancel out from the process if the client ticket has not loaded
     if (!clientSecret) {
       return;
@@ -96,7 +97,9 @@ export const CheckoutForm = () => {
       })
       .then((result) => {
         //result can be 1. ok - payement intent // 2. bad -error
+      //  console.log(result);
         if (result.error) {
+          console.log(result.error);
           toast.error(result.error.message);
           setMessage(result.error.message);
           return;
